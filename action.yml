@@ -1,0 +1,36 @@
+# action.yml
+name: 'Create Test Request'
+description: 'Get release notes and existing issues for a release. Make a Confluence page and send emails to a list of recipients with this information.'
+inputs:
+  confluence-email:
+    description: 'Email for Confluence to authenticate with'
+    required: true
+    defualt: 'andrew.mathies@geappliances.com'
+  confluence-space:
+    description: 'Key for the space in Confluence where the test request page will be created'
+    required: true
+    default: 'VFJXJ'
+  confluence-parent-id:
+    descriptions: 'ID of the page in Confluence that will be the parent of the test request page being created'
+    required: true
+  github-key:
+    description: 'API key for github'
+    required: true
+  zenhub-key:
+    description: 'API key for Zenhub'
+    required: true
+  confluence-key:
+    description: 'API key for Confluence'
+    required: true
+outputs:
+  page-id:
+    description: 'ID of Confluence page created. If this is empty then the action failed to make a page'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.confluence-space }}
+    - ${{ inputs.confluence-parent-id }}
+    - ${{ inputs.github-key }}
+    - ${{ inputs.zenhub-key }}
+    - ${{ inputs.confluence-key }}
