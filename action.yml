@@ -22,15 +22,17 @@ inputs:
   confluence-key:
     description: 'API key for Confluence'
     required: true
-outputs:
-  page-id:
-    description: 'ID of Confluence page created. If this is empty then the action failed to make a page'
+  repo:
+    description: 'repo'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - ${{ inputs.confluence-email }}
     - ${{ inputs.confluence-space }}
     - ${{ inputs.confluence-parent-id }}
     - ${{ inputs.github-key }}
     - ${{ inputs.zenhub-key }}
     - ${{ inputs.confluence-key }}
+    - ${{ inputs.repo }}
