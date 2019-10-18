@@ -128,12 +128,8 @@ def get_existing_issues(session, repo, release):
     return links, pipelines
 
 def publish_page(session, html):
-    confluence_kwargs['headers']['Authorization'] = encode_key(CONFLUENCE_EMAIL, CONFLUENCE_KEY)
     confluence_kwargs['json']['title'] = 'test'
-    confluence_kwargs['json']['ancestors'][0]['id'] = PARENT_ID
-    confluence_kwargs['json']['space']['key'] = SPACE_KEY
     confluence_kwargs['json']['body']['storage']['value'] = html
-
     resp = session.post(confluence_url, **confluence_kwargs)
 
     try:
@@ -151,6 +147,9 @@ def publish_page(session, html):
 def init_headers():
     zenhub_kwargs['headers']['X-Authentication-Token'] = ZENHUB_KEY
     github_kwargs['headers']['Authorization'] = 'token ' + GITHUB_KEY
+    confluence_kwargs['headers']['Authorization'] = encode_key(CONFLUENCE_EMAIL, CONFLUENCE_KEY)
+    confluence_kwargs['json']['ancestors'][0]['id'] = PARENT_ID
+    confluence_kwargs['json']['space']['key'] = SPACE_KEY
 
 def main():
     session = requests.Session()
@@ -187,5 +186,13 @@ if __name__ == '__main__':
     CONFLUENCE_KEY = sys.argv[6]
     REPO = sys.argv[7]
     
+    print('confluence email: ', CONFLUENCE_EMAIL)
+    print('confluence space key: ', SPACE_KEY)
+    print('confluence parent id: ', PARENT_ID)
+    print('github key: ', GITHUB_KEY)
+    print('zenhub key: ', ZENHUB_KEY)
+    print('confluence key: ', CONFLUENCE_KEY)
+    print('repo: ', REPO)
+
     init_headers()
     main()
