@@ -155,14 +155,14 @@ def init_headers():
 def main():
     session = requests.Session()
     
-    with open('./html_templates/template_beginning.html', 'r') as f:
+    with open('../html_templates/template_beginning.html', 'r') as f:
         page_html = f.read()
 
     links, pipelines = get_notes(session, REPO)
     bbt_table = build_table(['Issues', 'Pipelines'], links, pipelines)
     page_html += bbt_table
 
-    with open('./html_templates/template_middle.html', 'r') as f:
+    with open('../html_templates/template_middle.html', 'r') as f:
         page_html += f.read()
 
     reports = get_relevant_reports(session, REPO)
