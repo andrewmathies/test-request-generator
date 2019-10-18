@@ -9,4 +9,4 @@ ADD . .
 RUN pip install requests
 
 # Code file to execute when the docker container starts up
-ENTRYPOINT [ "python", "src/main.py" ]
+ENTRYPOINT [ "python", "/test-request-generator/src/main.py" ]
